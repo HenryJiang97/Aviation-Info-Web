@@ -10,10 +10,14 @@ export default class Manufacturer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            manufacturerList: []
+            manufacturerList: [],
+            nameInput: ""
         };
         this.getManufacturers();
         this.getManufacturers = this.getManufacturers.bind(this);
+        this.addManufacturer = this.addManufacturer.bind(this);
+        this.handleAddClick = this.handleAddClick.bind(this);
+        this.handleNameInputChange = this.handleNameInputChange.bind(this);
     }
 
     getManufacturers() {
@@ -28,6 +32,38 @@ export default class Manufacturer extends Component {
         }).catch(function (err) {
             console.log(err);
         });
+    }
+
+    // Add manufacturer
+    addManufacturer(id, name) {
+        const that = this;
+        Axios.post(
+            `${manufacturerApiPrefix}`,
+            {
+                "id": id,
+                "name": name
+            }
+        ).then(function (response) {
+            alert("Added");
+        }).catch(function (err) {
+            alert("Error adding new manufacturer");
+            console.log(err, "Error adding new manufacturer");
+        });
+    }
+
+    handleAddClick() {
+        let name = this.state.nameInput;
+        if (name == "") {
+            alert("No input");
+        } else {
+            this.addManufacturer(name, name);
+        }
+        this.setState({nameInput: ""});
+        document.getElementById("nameInput").value = "";
+    }
+
+    handleNameInputChange(evt) {
+        this.setState({nameInput: evt.target.value});
     }
 
     render() {
@@ -48,6 +84,16 @@ export default class Manufacturer extends Component {
                         })}
                     </ul>
                 </div>
+
+                <div>
+                    <div>
+                        <label>Name: </label>
+                        <input id="nameInput" onChange={this.handleNameInputChange}></input>
+                    </div>
+
+                    <button id="addButton" onClick={this.handleAddClick}>Add Manufacturer</button>
+                </div>
+                
             </div>
             
         );

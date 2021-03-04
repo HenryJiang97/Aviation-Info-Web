@@ -1,10 +1,10 @@
 import './App.css';
 import { Route, Switch } from "react-router-dom";
 import Home from './Home';
-import Manufacturer from './Plane/Manufacturer';
-import Model from './Plane/Model';
-import Submodel from './Plane/Submodel';
-import plane from './Plane/Plane';
+import Manufacturer from './plane/manufacturer';
+import Model from './plane/model';
+import Submodel from './plane/submodel';
+import plane from './plane/plane';
 
 function App() {
   return (
