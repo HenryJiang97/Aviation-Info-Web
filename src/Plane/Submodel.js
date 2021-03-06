@@ -146,7 +146,7 @@ export default class Submodel extends Component {
 
                 {/* Add Plane*/}
                 <div>
-                    <h2>Edit</h2>
+                    <h2>Add</h2>
 
                     <div>
                         <div>

@@ -86,6 +86,8 @@ export default class Manufacturer extends Component {
                 </div>
 
                 <div>
+                    <h2>Add</h2>
+                    
                     <div>
                         <label>Name: </label>
                         <input id="nameInput" onChange={this.handleNameInputChange}></input>

@@ -11,10 +11,14 @@ export default class Model extends Component {
         super(props);
         this.state = {
             manufacturer: this.props.match.params.manfuacturer,
-            modelList: []
+            modelList: [],
+            id: "",
+            name: "",
         };
         this.getModels();
         this.getModels = this.getModels.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleAddClick = this.handleAddClick.bind(this);
     }
 
     getModels() {
@@ -29,6 +33,42 @@ export default class Model extends Component {
         }).catch(function (err) {
             console.log(err);
         });
+    }
+
+    // Add new model
+    addModel() {
+        const that = this;
+        Axios.post(
+            `${modelApiPrefix}`,
+            {
+                "id": that.state.id,
+                "name": that.state.name,
+                "manufacturer": that.state.manufacturer,
+            }
+        ).then(function(response) {
+            alert("Model added");
+        }).catch(function(err) {
+            alert("Error");
+            console.log(err, "Error adding new model");
+        });
+    }
+
+    handleInputChange(evt) {
+        this.setState(
+            {
+                [evt.target.id]: evt.target.value
+            }
+        )
+    }
+
+    handleAddClick() {
+        this.addModel();
+        this.setState({
+            id: "",
+            name: "",
+        });
+        document.getElementById("id").value = "";
+        document.getElementById("name").value = "";
     }
 
     render() {
@@ -48,6 +88,23 @@ export default class Model extends Component {
                             </li>
                         })}
                     </ul>
+                </div>
+
+                {/* Add Model */}
+                <div>
+                    <h2>Add</h2>
+
+                    <div>
+                        <label>Id: </label>
+                        <input id="id" onChange={this.handleInputChange}></input>
+                    </div>
+                    
+                    <div>
+                        <label>Name: </label>
+                        <input id="name" onChange={this.handleInputChange}></input>
+                    </div>
+
+                    <button id="addButton" onClick={this.handleAddClick}>Add Model</button>
                 </div>
             </div>
             
